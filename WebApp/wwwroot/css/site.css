@@ -1,0 +1,70 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+
+/* Sidebar styling */
+#sidebar {
+    width: 220px;
+}
+
+.offcanvas-lg {
+    position: static;
+    max-width: 220px;
+    background-color: #343a40;
+    color: white;
+}
+
+    .offcanvas-lg .nav-link {
+        color: white;
+    }
+
+        .offcanvas-lg .nav-link:hover {
+            background-color: #495057;
+            color: white;
+        }
+
+#main-content {
+    margin-left: 0;
+    padding: 20px;
+}
+.custom-bright {
+    color: #ffffff; /* pure white */
+    text-shadow: 0 0 5px rgba(255,255,255,0.8); /* optional glow effect */
+}
+@media (min-width: 992px) {
+    #main-content {
+        margin-left: 220px; /* same as sidebar width */
+    }
+}
+@media(max-width: 576px) {
+    .login-box {
+        padding: 30px 25px;
+    }
+
+    .login-header {
+        font-size: 26px;
+    }
+}

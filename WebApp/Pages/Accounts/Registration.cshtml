@@ -1,0 +1,165 @@
+﻿@page
+@model WebApp.Pages.Accounts.RegistrationModel
+@{
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        .login-box {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+            .login-box:hover {
+                transform: translateY(-5px);
+            }
+
+        .login-header {
+            font-size: 30px;
+            font-weight: 700;
+            color: #d9534f;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 10px 15px;
+        }
+
+            .form-control:focus {
+                border-color: #d9534f;
+                box-shadow: 0 0 5px rgba(217,83,79,0.5);
+            }
+
+        .login-button {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+            .login-button:hover {
+                background-color: #c9302c;
+                transform: scale(1.02);
+            }
+
+        .login-footer {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+            .login-footer a {
+                color: #d9534f;
+                text-decoration: none;
+                margin: 5px 0;
+                display: block;
+            }
+
+                .login-footer a:hover {
+                    text-decoration: underline;
+                }
+
+        .alert {
+            margin-top: 15px;
+            border-radius: 10px;
+        }
+    </style>
+}
+
+<div class="container-fluid d-flex justify-content-center align-items-center" style="height:100vh; position:relative;">
+    <div class="overlay"></div>
+
+    <div class="login-box">
+        <h2 class="login-header">Create Account</h2>
+
+        <form method="post" novalidate style="width:100%;">
+            <div class="mb-3 text-start">
+                <label asp-for="user.Name" class="form-label">Full Name</label>
+                <input asp-for="user.Name" type="text" class="form-control" placeholder="Enter your full name" />
+                <span asp-validation-for="user.Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 text-start">
+                <label asp-for="user.Email" class="form-label">Email address</label>
+                <input asp-for="user.Email" type="email" class="form-control" placeholder="Enter your email" />
+                <span asp-validation-for="user.Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 text-start">
+                <label asp-for="user.PasswordHash" class="form-label">Password</label>
+                <input asp-for="user.PasswordHash" type="password" class="form-control" placeholder="Enter your password" />
+                <span asp-validation-for="user.PasswordHash" class="text-danger"></span>
+            </div>
+            <div class="mb-3 text-start">
+                <label asp-for="user.Contact" class="form-label">Contact</label>
+                <input asp-for="user.Contact" type="tel" class="form-control" placeholder="Enter your Contact Number" />
+                <span asp-validation-for="user.Contact" class="text-danger"></span>
+            </div>
+
+            @* <div class="mb-3 text-start">
+                <label asp-for="user.PasswordHash" class="form-label">Confirm Password</label>
+                <input asp-for="user.ConfirmPassword" type="password" class="form-control" placeholder="Confirm your password" />
+                <span asp-validation-for="user.ConfirmPassword" class="text-danger"></span>
+            </div> *@
+
+            <button type="submit" class="login-button">Register</button>
+        </form>
+
+        <div class="login-footer">
+            <a href="/Accounts/Login">Already have an account? Sign In</a>
+        </div>
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">@TempData["Success"]</div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        setTimeout(function () {
+            const alertEl = document.querySelector(".alert");
+            if (alertEl) {
+                alertEl.style.transition = "opacity 0.5s ease-out";
+                alertEl.style.opacity = "0";
+                setTimeout(() => alertEl.remove(), 500);
+            }
+        }, 4000);
+    </script>
+}

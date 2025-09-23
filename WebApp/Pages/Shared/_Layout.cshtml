@@ -1,0 +1,181 @@
+﻿﻿﻿@using System.Security.Claims
+@{
+    string role = User.Identity.IsAuthenticated ? User.FindFirst(ClaimTypes.Role)?.Value : null;
+    string userData = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    bool isAuthenticated = User.Identity.IsAuthenticated;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
+
+    @* Render page-specific styles if defined *@
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="/Index">
+                    <i class="bi bi-calendar-event me-2"></i> Kashbah
+                </a>
+
+                <!-- Offcanvas Toggle -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto text-white">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/Service/Menu"><i class="bi bi-house me-1"></i>Menu</a>
+                        </li>
+                       @if(isAuthenticated && (role=="1" || role=="2"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-calendar-check me-1"></i> Options
+                                </a>
+                                <ul class="dropdown-menu shadow-lg rounded-3 border-0 mt-2" aria-labelledby="navbarDropdown">
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center" href="/Service/Food">
+                                            <i class="bi bi-egg-fried me-2 text-primary"></i> Add Food
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center" href="/Service/Orders">
+                                            <i class="bi bi-bag-check me-2 text-success"></i> All Orders
+                                        </a>
+                                    </li>
+                                    @if (role == "1")
+                                    {
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="/Service/Executive">
+                                                <i class="bi bi-people-fill me-2 text-danger"></i> Manage Staff
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="/Service/Attendance">
+                                                <i class="bi bi-people-fill me-2 text-danger"></i> Attendance
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="navbar-nav ms-auto">
+                        @if(isAuthenticated)
+                        {
+                            <a class="nav-link" href="/Service/Cart"><i class="bi bi-cart me-1"></i>Cart <span class="badge bg-danger">3</span></a>
+                            @* <a class="nav-link" href="#"><i class="bi bi-bell me-1"></i>Notifications</a> *@
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                    <i class="bi bi-person-circle me-1"></i>Accounts
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" asp-page="/Accounts/AccountDetails" asp-route-id="@userData">Profile</a></li>
+                                    <li><a class="dropdown-item" href="/Service/PrevOrders">Previous Orders</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" asp-page="/Accounts/Login" asp-page-handler="Logout">Logout</a></li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <a class="nav-link" href="/Accounts/Login"><i class="bi bi-cart me-1"></i>Log In</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="offcanvas offcanvas-start offcanvas-lg bg-danger text-white" tabindex="-1" id="sidebar">
+            <div class="offcanvas-header d-lg-none">
+                <h5 class="offcanvas-title"><i class="bi bi-list me-2"></i>Menu</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body px-0">
+                <ul class="nav flex-column">
+                   @if(isAuthenticated)
+                    {
+                        <li class="nav-item"><a class="nav-link active" href="/Accounts/AccountsDetails"><i class="bi bi-house me-2"></i>Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Service/Menu"><i class="bi bi-calendar-week me-2"></i>Menu</a></li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a class="nav-link active" href="/Accounts/Login"><i class="bi bi-house me-2"></i>Login</a></li>
+                    }
+                    @if(isAuthenticated && (role=="1" || role=="2"))
+                    {
+                        <li class="nav-item"><a class="nav-link" href="/Service/Reports"><i class="bi bi-graph-up me-2"></i>Reports</a></li>
+                    }
+                    @if (isAuthenticated && (role == "1"))
+                    {
+                        <li class="nav-item"><a class="nav-link" href="/Service/Executive"><i class="bi bi-people me-2"></i>Executive</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Service/Reports"><i class="bi bi-graph-up me-2"></i>Reports</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Service/Attendance"><i class="bi bi-graph-up me-2"></i>Attendance</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <!-- Footer -->
+    <footer class="bg-danger text-white mt-auto py-4 w-100">
+        <div class="container">
+            <div class="row">
+                <!-- About -->
+                <div class="col-md-4 mb-3">
+                    <h5>About Kashbah</h5>
+                    <p>We provide the best resturant management services for ordering food, managing orders and staff attendance tracking.</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-md-4 mb-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/Index" class="text-white text-decoration-none">Home</a></li>
+                        <li><a href="/Service" class="text-white text-decoration-none">Menu</a></li>
+                        <li><a href="/Service/Cart" class="text-white text-decoration-none">Cart</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="col-md-4 mb-3">
+                    <h5>Contact Us</h5>
+                    <p><i class="bi bi-geo-alt me-1"></i> Road:10,Sector:10,Uttara,Dhaka</p>
+                    <p><i class="bi bi-envelope me-1"></i> kashbah123@gmail.com</p>
+                    <p><i class="bi bi-telephone me-1"></i> 01792-963204 </p>
+                </div>
+            </div>
+
+            <hr class="bg-white">
+
+            <div class="text-center">
+                &copy; 2025 Kashbah. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
