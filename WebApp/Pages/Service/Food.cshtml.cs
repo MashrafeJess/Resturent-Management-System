@@ -35,7 +35,7 @@ namespace WebApp.Pages.Service
                 if (result.Success)
                 {
                     TempData["Success"] = result.Message;
-                    return RedirectToPage("Service/ExecutiveList");
+                    return RedirectToPage("/Service/FoodList");
                 }
                 else
                 {
@@ -51,7 +51,7 @@ namespace WebApp.Pages.Service
                 if (result.Success)
                 {
                     TempData["Success"] = result.Message;
-                    return RedirectToPage("Service/ExecutiveList");
+                    return RedirectToPage("/Service/FoodList");
                 }
                 else
                 {
