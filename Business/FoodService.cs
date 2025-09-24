@@ -37,5 +37,10 @@ namespace Business
             var foods = context.Food.ToList();
             return new Result(true, "Success", foods);
         }
+        public Result Single(int Id)
+        {
+            var food = context.Food.Where(x => x.FoodId == Id).FirstOrDefault();
+            return new Result(true, "Success", food);
+        }
     }
 }

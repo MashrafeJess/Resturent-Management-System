@@ -30,6 +30,7 @@ namespace Database.Context
             //=============== View Models ===============
             public DbSet<User_Attendance> User_Attendance { get; set; }
             public DbSet<User_Role> User_Role { get; set; }
+            public DbSet<JoinCart> JoinCart { get; set; }
         }
     }
 }

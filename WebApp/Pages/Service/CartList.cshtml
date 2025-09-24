@@ -1,0 +1,73 @@
+﻿@page
+@model WebApp.Pages.Service.CartListModel
+@{
+    Layout = "_Layout";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center"><i class="bi bi-cart4 me-2"></i>My Cart</h2>
+
+    @if (Model.carts != null && Model.carts.Any())
+    {
+        <div class="card shadow-lg">
+            <div class="card-body p-0">
+                <table class="table table-striped table-hover mb-0 align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Food</th>
+                            <th>Image</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.carts)
+                        {
+                            <tr>
+                                <td>@item.FoodName</td>
+                                <td>
+                                    <img src="@item.Link" alt="@item.FoodName" class="img-thumbnail" style="width:60px;height:60px;">
+                                </td>
+                                <td>$@item.Price</td>
+                                <td>
+                                    <form method="post" asp-page-handler="UpdateQty" asp-route-id="@item.FoodId" class="d-flex align-items-center">
+                                        <input type="number" name="Qty" value="@item.Qty" min="1" class="form-control form-control-sm me-2" style="width:80px;" />
+                                        <button type="submit" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-arrow-repeat"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                                <td><strong>$@(item.Price)</strong></td>
+                                <td>
+                                    <form method="post" asp-page-handler="Delete" asp-route-id="@item.CartId" style="display:inline;">
+                                        <input type="hidden" name="CartId" value="@item.CartId" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <a asp-page="/Service/Payment" asp-route-cartId="@item.FoodId" class="btn btn-sm btn-success">
+                                        <i class="bi bi-credit-card me-1"></i>Pay
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <h5>Total: <span class="text-success">$@Model.carts.Sum(x => x.Price)</span></h5>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+            <i class="bi bi-info-circle me-2"></i>Your cart is empty.
+        </div>
+    }
+</div>

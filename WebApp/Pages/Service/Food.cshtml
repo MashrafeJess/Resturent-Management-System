@@ -1,4 +1,65 @@
-﻿@page
+﻿@page "{id?}"
 @model WebApp.Pages.Service.FoodModel
 @{
+    Layout = "_Layout";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="bi bi-basket-fill me-2"></i> @(Model.food.FoodId == 0 ? "Add New food" : "Update food")
+                    </h5>
+                    <a class="btn btn-light btn-sm" asp-page="/Service/foodList">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+
+                        <input type="hidden" asp-for="food.FoodId" />
+
+                        <div class="mb-3">
+                            <label asp-for="food.FoodName" class="form-label fw-bold"></label>
+                            <input asp-for="food.FoodName" class="form-control" placeholder="Enter food name" />
+                            <span asp-validation-for="food.FoodName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="food.Price" class="form-label fw-bold"></label>
+                            <input asp-for="food.Price" class="form-control" type="number" step="0.01" placeholder="Enter price" />
+                            <span asp-validation-for="food.Price" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="food.Qty" class="form-label fw-bold"></label>
+                            <input asp-for="food.Qty" class="form-control" type="number" placeholder="Enter quantity" />
+                            <span asp-validation-for="food.Qty" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="food.Link" class="form-label fw-bold"></label>
+                            <input asp-for="food.Link" class="form-control" placeholder="Enter image/link URL" />
+                            <span asp-validation-for="food.Link" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-success px-4">
+                                <i class="bi bi-check-circle me-1"></i> @(Model.food.FoodId == 0 ? "Add food" : "Update food")
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

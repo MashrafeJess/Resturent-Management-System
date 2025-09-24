@@ -98,7 +98,16 @@ namespace Business
 
             return new Result(true, "User found", user);
         }
-       
+        public Result JoinSingle(string Id)
+        {
+            var user = context.User_Role.FirstOrDefault(u => u.UserId == Id);
+            if (user == null)
+            {
+                return new Result(false, "User not found", null);
+            }
+
+            return new Result(true, "User found", user);
+        }
     }
 
 

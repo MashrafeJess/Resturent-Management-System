@@ -1,0 +1,68 @@
+﻿@page
+@model WebApp.Pages.Service.ExecutiveListModel
+@{
+    Layout = "_Layout";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<div class="container">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="bi bi-people-fill me-2"></i> Executives</h5>
+            <a class="btn btn-light btn-sm" asp-area="" asp-page="/Service/Executive">
+                <i class="bi bi-person-plus me-1"></i> Add New Executive
+            </a>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                            <th style="width:120px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.users != null && Model.users.Any())
+                        {
+                            foreach (var exec in Model.users)
+                            {
+                                <tr>
+                                    <td>@exec.Name</td>
+                                    <td>@exec.Email</td>
+                                    <td>@exec.Contact</td>
+                                    <td>@exec.RoleName</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-sm btn-outline-primary"
+                                           asp-page="/Service/Executive"
+                                           asp-route-id="@exec.UserId"
+                                           title="Edit">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <form method="post" asp-page-handler="DeleteExecutive"
+                                              asp-route-id="@exec.UserId"
+                                              class="d-inline">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center">No executives available.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

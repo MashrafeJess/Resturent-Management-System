@@ -44,7 +44,7 @@
                                 </a>
                                 <ul class="dropdown-menu shadow-lg rounded-3 border-0 mt-2" aria-labelledby="navbarDropdown">
                                     <li>
-                                        <a class="dropdown-item d-flex align-items-center" href="/Service/Food">
+                                        <a class="dropdown-item d-flex align-items-center" href="/Service/FoodList">
                                             <i class="bi bi-egg-fried me-2 text-primary"></i> Add Food
                                         </a>
                                     </li>
@@ -56,7 +56,7 @@
                                     @if (role == "1")
                                     {
                                         <li>
-                                            <a class="dropdown-item d-flex align-items-center" href="/Service/Executive">
+                                            <a class="dropdown-item d-flex align-items-center" href="/Service/ExecutiveList">
                                                 <i class="bi bi-people-fill me-2 text-danger"></i> Manage Staff
                                             </a>
                                         </li>
@@ -74,7 +74,7 @@
                     <div class="navbar-nav ms-auto">
                         @if(isAuthenticated)
                         {
-                            <a class="nav-link" href="/Service/Cart"><i class="bi bi-cart me-1"></i>Cart <span class="badge bg-danger">3</span></a>
+                            <a class="nav-link" href="/Service/CartList"><i class="bi bi-cart me-1"></i>Cart</a>
                             @* <a class="nav-link" href="#"><i class="bi bi-bell me-1"></i>Notifications</a> *@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
@@ -107,6 +107,7 @@
                     {
                         <li class="nav-item"><a class="nav-link active" href="/Accounts/AccountsDetails"><i class="bi bi-house me-2"></i>Dashboard</a></li>
                         <li class="nav-item"><a class="nav-link" href="/Service/Menu"><i class="bi bi-calendar-week me-2"></i>Menu</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Service/CartList"><i class="bi bi-calendar-week me-2"></i>Cart</a></li>
                     }
                     else
                     {
@@ -114,11 +115,11 @@
                     }
                     @if(isAuthenticated && (role=="1" || role=="2"))
                     {
-                        <li class="nav-item"><a class="nav-link" href="/Service/Reports"><i class="bi bi-graph-up me-2"></i>Reports</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Service/FoodList"><i class="bi bi-graph-up me-2"></i>Add Food</a></li>
                     }
                     @if (isAuthenticated && (role == "1"))
                     {
-                        <li class="nav-item"><a class="nav-link" href="/Service/Executive"><i class="bi bi-people me-2"></i>Executive</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Service/ExecutiveList"><i class="bi bi-people me-2"></i>Executives</a></li>
                         <li class="nav-item"><a class="nav-link" href="/Service/Reports"><i class="bi bi-graph-up me-2"></i>Reports</a></li>
                         <li class="nav-item"><a class="nav-link" href="/Service/Attendance"><i class="bi bi-graph-up me-2"></i>Attendance</a></li>
                     }

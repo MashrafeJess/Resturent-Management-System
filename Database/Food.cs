@@ -12,8 +12,9 @@ namespace Database
         [Key]
         public int FoodId { get; set; }
         public string FoodName { get; set; } = string.Empty;
-        public decimal Price { get; set; }
+        public int Price { get; set; }
         public int Qty { get; set; }
+        public string Link { get; set; } 
         //public string Category { get; set; } = string.Empty; (Next Iteration)
     }
 }
